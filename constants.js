@@ -1,0 +1,11 @@
+exports.CAPABILITY = "capability";
+exports.CATEGORIES = "categories";
+exports.CONTRACT = "contract";
+exports.GRANDS = "grands";
+exports.DORMITORY = "dormitory";
+exports.TRANSFER = "transfer";
+exports.STRUCTURE = "structure";
+exports.SPORT = "sport";
+exports.SCHEDULE = "schedule";
+exports.MEDICINE = "medicine";
+exports.MILITARYDEP = "militarydep";
