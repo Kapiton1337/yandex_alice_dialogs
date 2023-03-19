@@ -1,26 +1,29 @@
-const {Alice, Reply, Markup} = require('yandex-dialogs-sdk')
-const alice = new Alice();
-const any = require("./scenes/any");
-const hello = require('./scenes/hello')
-const {commandCreator} = require("./scenes/commandCreator");
-const {CAPABILITY, CATEGORIES, CONTRACT, GRANDS, DORMITORY, TRANSFER, STRUCTURE, SPORT, SCHEDULE, MEDICINE, MILITARYDEP} = require("./constants");
+const {Alice, Reply, Markup} = require('yandex-dialogs-sdk');
+const {responses, requests} = require("./phrases/dictionary");
+const {matcher} = require("./scenes/commandCreator");
+/**
+ * Entry-point for Serverless Function.
+ *
+ * @param event {Object} request payload.
+ * @param context {Object} information about current execution context.
+ *
+ * @return {Promise<Object>} response to be serialized as JSON.
+ */
+module.exports.handler = async (event, context) => {
+    const {version, session, request} = event;
 
-const M = Markup;
+    let text = responses["capability"]["skills"];
 
-alice.command(hello.matcher, hello.handler);
-
-commandCreator(alice, Reply, CAPABILITY);
-commandCreator(alice, Reply, CATEGORIES);
-commandCreator(alice, Reply, GRANDS);
-commandCreator(alice, Reply, DORMITORY);
-commandCreator(alice, Reply, TRANSFER);
-commandCreator(alice, Reply, CONTRACT);
-commandCreator(alice, Reply, STRUCTURE);
-commandCreator(alice, Reply, SPORT);
-commandCreator(alice, Reply, SCHEDULE);
-commandCreator(alice, Reply, MEDICINE);
-commandCreator(alice, Reply, MILITARYDEP);
-
-alice.any(any)
-
-const server = alice.listen(3000, '/');
+    if (request['original_utterance'].length > 0) {
+        const [key, found] = matcher(requests, request['original_utterance']);
+        text = responses[key][found];
+    }
+    return {
+        version,
+        session,
+        response: {
+            text: text,
+            end_session: false,
+        },
+    };
+};
