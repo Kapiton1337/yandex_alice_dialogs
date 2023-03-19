@@ -1,6 +1,7 @@
 const {Alice, Reply, Markup} = require('yandex-dialogs-sdk');
 const {responses, requests} = require("./phrases/dictionary");
 const {matcher} = require("./scenes/commandCreator");
+const store = require("./phrases/dictionary");
 /**
  * Entry-point for Serverless Function.
  *
