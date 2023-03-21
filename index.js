@@ -28,3 +28,6 @@ module.exports.handler = async (event, context) => {
         },
     };
 };
+
+const [key, found] = matcher(requests, "как подготовиться к приему в ВУЦ");
+console.log(responses[key][found]);

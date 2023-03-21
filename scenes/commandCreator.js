@@ -5,6 +5,8 @@ const matcher = (obj, search) => {
         for (const key in current) {
             if (current[key] === search) {
                 return path.concat(key);
+            } else if (Array.isArray(current[key]) && current[key].includes(search)) {
+                return path.concat(key);
             } else if (typeof current[key] === 'object') {
                 stack.push([current[key], path.concat(key)]);
             }
